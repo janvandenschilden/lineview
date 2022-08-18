@@ -43,6 +43,8 @@ export default class Lineview {
         this.cursor_style_grabbing = 'grabbing';
         this.zoom_factor = 1.25;
 
+        this.last_action = "init";
+
 
         // params given by user overwrite default
         this.update_params(params);
@@ -97,6 +99,7 @@ export default class Lineview {
             "cursor_style_idle": this.cursor_style_idle,
             "cursor_style_grabbing": this.cursor_style_grabbing,
             "zoom_factor": this.zoom_factor,
+            "last_action": this.last_action
         }
     }
 
@@ -388,12 +391,20 @@ export default class Lineview {
         let thisModule = this;
         
         this.svg.on("mousedown", function(e1){
+
+            thisModule.last_action = "drag.start";
+
             let x_start = e1.x;
             let scale = thisModule.scale_x;
             let cs_start = thisModule.cs;
             let ce_start = thisModule.ce;
 
+            thisModule.dispatch_update();
+
             thisModule.svg.on("mousemove", function(e2){
+
+                thisModule.last_action = "drag";
+
                 thisModule.svg.style('cursor', thisModule.cursor_style_grabbing);
                 let dc = - scale.invert(e2.x) + scale.invert(x_start);
                 
@@ -402,11 +413,16 @@ export default class Lineview {
                 thisModule.dispatch_update();
 
                 thisModule.svg.on("mouseup", function(){
+
+                    thisModule.last_action = "drag.end";
+
                     thisModule.svg
                         .on('mousemove', null)
                         .on('mouseup', null)
                         ;
                     thisModule.svg.style('cursor', thisModule.cursor_style_idle);
+
+                    thisModule.dispatch_update();
                 })
             })
         });
@@ -415,6 +431,9 @@ export default class Lineview {
     add_zooming_functionality(){
         let thisModule = this;
         this.svg.on('wheel',function(e){
+
+            thisModule.last_action = "zoom";
+
             let window = thisModule.ce - thisModule.cs;
             let new_window = window;
             if (e.wheelDeltaY < 0){
