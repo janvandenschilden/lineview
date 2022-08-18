@@ -396,10 +396,11 @@ export default class Lineview {
             thisModule.svg.on("mousemove", function(e2){
                 thisModule.svg.style('cursor', thisModule.cursor_style_grabbing);
                 let dc = - scale.invert(e2.x) + scale.invert(x_start);
-                thisModule.update({
-                    cs: cs_start + dc,
-                    ce: ce_start + dc
-                })
+                
+                thisModule.cs = cs_start + dc;
+                thisModule.ce = ce_start + dc;
+                thisModule.dispatch_update();
+
                 thisModule.svg.on("mouseup", function(){
                     thisModule.svg
                         .on('mousemove', null)
@@ -423,10 +424,10 @@ export default class Lineview {
                 new_window = new_window/thisModule.zoom_factor;
             }
             let dc = (new_window - window)/2;
-            thisModule.update({
-                cs: thisModule.cs - dc,
-                ce: thisModule.ce + dc,
-            });
+
+            thisModule.cs = thisModule.cs - dc;
+            thisModule.ce = thisModule.ce + dc;
+            thisModule.dispatch_update();
         });
     }
 }
