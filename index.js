@@ -61,6 +61,45 @@ export default class Lineview {
         this.add_zooming_functionality();
     };
 
+    get message(){
+        return {
+            "container_id": this.container_id,
+            "svg_width": this.svg_width,
+            "svg_height": this.svg_height,
+            "svg_background": this.svg_background,
+            "axis_left": this.axis_left,
+            "axis_top": this.axis_top,
+            "axis_ymin": this.axis_ymin,
+            "axis_ymax": this.axis_ymax,
+            "axis_tickvalues": this.axis_tickvalues,
+            "rawdata": this.rawdata,
+            "cbsdata": this.cbsdata,
+            "zoomdata": this.zoomdata,
+            "cs": this.cs,
+            "ce": this.ce,
+            "threshold_upper": this.threshold_upper,
+            "threshold_lower": this.threshold_lower,
+            "color_upper": this.color_upper,
+            "color_lower": this.color_lower,
+            "color_middle": this.color_middle,
+            "height_normal": this.height_normal,
+            "height_lower": this.height_lower,
+            "height_upper": this.height_upper,
+            "cbs_opacity": this.cbs_opacity,
+            "zoom_opacity_outer": this.zoom_opacity_outer,
+            "zoom_opacity_inner": this.zoom_opacity_inner,
+            "show_axis_x": this.show_axis_x,
+            "show_axis_y": this.show_axis_y,
+            "show_rawdata": this.show_rawdata,
+            "show_cbsdata": this.show_cbsdata,
+            "show_cbsdata_fill": this.show_cbsdata_fill,
+            "show_zoomdata": this.show_zoomdata,
+            "cursor_style_idle": this.cursor_style_idle,
+            "cursor_style_grabbing": this.cursor_style_grabbing,
+            "zoom_factor": this.zoom_factor,
+        }
+    }
+
     update(params){
         this.remove_all_groups();
         this.update_params(params);
