@@ -111,6 +111,10 @@ export default class Lineview {
             this[key] = params[key]
         };
     }
+
+    dispatch_update(){
+        d3.select(this.container_id).dispatch("update", {'detail':this.message});
+    }
     
     remove_all_groups(){
         this.remove_axis_x();
