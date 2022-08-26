@@ -130,6 +130,7 @@ export default class Lineview {
     }
 
     render(){
+        this.svg.attr("width", this.svg_width);
         this.draw_clip();
         if (this.show_axis_y) {
             this.draw_axis_y();
