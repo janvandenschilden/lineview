@@ -69,14 +69,6 @@ export default class Lineview {
         return this.ce-this.cs;
     }
 
-    get csMax(){
-        return this.ceMax - this.window;
-    }
-
-    get ceMin(){
-        return this.csMin + this.window;
-    }
-
 
     get message(){
         return {
@@ -426,8 +418,22 @@ export default class Lineview {
                 thisModule.svg.style('cursor', thisModule.cursor_style_grabbing);
                 let dc = - scale.invert(e2.x) + scale.invert(x_start);
                 
-                thisModule.cs = cs_start + dc;
-                thisModule.ce = ce_start + dc;
+                var newCs = cs_start + dc;
+                var newCe = ce_start + dc;
+
+                if (newCs < thisModule.csMin){
+                    thisModule.cs = thisModule.csMin;
+                    thisModule.ce = thisModule.csMin + thisModule.window;
+                }
+                else if (newCe > thisModule.ceMax){
+                    thisModule.cs = thisModule.ceMax - thisModule.window;
+                    thisModule.ce = thisModule.ceMax;
+                }
+                else{
+                    thisModule.cs = newCs;
+                    thisModule.ce = newCe;
+                }
+
                 thisModule.dispatch_update();
 
                 thisModule.svg.on("mouseup", function(){
