@@ -18,8 +18,10 @@ export default class Lineview {
         this.rawdata = [];
         this.cbsdata = [];
         this.zoomdata = [],
-        this.cs = 1;
-        this.ce = 150000000;
+        this.cs = null;
+        this.csMin = null;
+        this.ce = null;
+        this.ceMax = null;
         this.threshold_upper = 0.35;
         this.threshold_lower = -0.35;
         this.color_upper = "blue";
@@ -63,6 +65,19 @@ export default class Lineview {
         this.add_zooming_functionality();
     };
 
+    get window(){
+        return this.ce-this.cs;
+    }
+
+    get csMax(){
+        return this.ceMax - this.window;
+    }
+
+    get ceMin(){
+        return this.csMin + this.window;
+    }
+
+
     get message(){
         return {
             "container_id": this.container_id,
@@ -78,7 +93,9 @@ export default class Lineview {
             "cbsdata": this.cbsdata,
             "zoomdata": this.zoomdata,
             "cs": this.cs,
+            "csMin": this.csMin,
             "ce": this.ce,
+            "ceMax": this.ceMax,
             "threshold_upper": this.threshold_upper,
             "threshold_lower": this.threshold_lower,
             "color_upper": this.color_upper,
