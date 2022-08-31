@@ -468,8 +468,14 @@ export default class Lineview {
             }
             let dc = (new_window - window)/2;
 
-            thisModule.cs = thisModule.cs - dc;
-            thisModule.ce = thisModule.ce + dc;
+            thisModule.cs = d3.max([
+                thisModule.cs - dc,
+                thisModule.csMin
+            ]);
+            thisModule.ce = d3.min([
+                thisModule.ce + dc,
+                thisModule.ceMax
+            ])            
             thisModule.dispatch_update();
         });
     }
